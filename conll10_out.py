@@ -17,6 +17,7 @@ https://spacy.io/docs#getting-started.
 
 import spacy
 import os
+from os.path import join as pjoin
 
 print('conll10_out.py')
 
@@ -24,11 +25,12 @@ def main(files):
     print('Loading spaCy...')
     nlp = spacy.load('en')
     
-    for file in files:
-        print('Processing ' + file)
-        input_txt = input_dir + os.sep + file
-        output_conll10 = output_dir + os.sep + file[:-4] + '_out.conll10'
-        output_txt = output_dir + os.sep + file
+    for filename in files:
+        print('Processing ' + filename)
+        input_txt = pjoin(os.sep, input_dir, filename)
+        output_conll10 = (pjoin(os.sep, output_dir, filename[:-4]) 
+                          + '_out' + os.extsep + 'conll10')
+        output_txt = pjoin(os.sep, output_dir, filename)
         
         clean_up_file(output_conll10)
         clean_up_file(output_txt)
@@ -92,15 +94,18 @@ def conll(nlp, input_file, output_file):
                 '_' + '\t' +           # unused column
                 '_' + '\n')            # unused column
 
-input_dir = '.' + os.sep + 'input'
-output_dir = '.' + os.sep + 'output'
+#input_dir = '.' + os.sep + 'input'
+#output_dir = '.' + os.sep + 'output'
+
+input_dir = pjoin(os.sep, os.getcwd(), 'input')
+output_dir = pjoin(os.sep, os.getcwd(), 'output')
 
 input_files = []
 
 for path, subdirs, files in os.walk(input_dir):
-    for file in files:
-        if path == input_dir and file.lower().endswith('.txt'):
-            input_files.append(file)
+    for filename in files:
+        if path == input_dir and filename.lower().endswith('.txt'):
+            input_files.append(filename)
 
 if len(input_files) > 0:
     main(input_files)
