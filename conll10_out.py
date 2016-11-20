@@ -94,9 +94,6 @@ def conll(nlp, input_file, output_file):
                 '_' + '\t' +           # unused column
                 '_' + '\n')            # unused column
 
-#input_dir = '.' + os.sep + 'input'
-#output_dir = '.' + os.sep + 'output'
-
 input_dir = pjoin(os.sep, os.getcwd(), 'input')
 output_dir = pjoin(os.sep, os.getcwd(), 'output')
 
